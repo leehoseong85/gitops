@@ -28,13 +28,13 @@ pipeline {
           }
         }
         failure {
-          environment{
+          environment {
             color = "danger"
           }
         }
         always {
           slackSend(message: """${env.JOB_NAME} #${env.BUILD_NUMBER} End
-          """, color: ${color}, tokenCredentialId: 'slack-key')
+          """, color: "${color}", tokenCredentialId: 'slack-key')
         }
       }
     }
