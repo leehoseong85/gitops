@@ -14,7 +14,9 @@ pipeline {
       }
     }
     stage('k8s deploy'){
-      def color = 'good'
+      script {
+        def color = 'good'
+      }
       steps {
         kubernetesDeploy(kubeconfigId: 'kubeconfig',
                          configs: '*.yaml')
