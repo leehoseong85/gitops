@@ -23,18 +23,12 @@ pipeline {
       }
       post {
         success {
-          script {
-            color = "good"
-          }
+          slackSend(message: """${env.JOB_NAME} #${env.BUILD_NUMBER} successed
+          """, color: 'good', tokenCredentialId: 'slack-key')
         }
         failure {
-          script {
-            color = "danger"
-          }
-        }
-        always {
-          slackSend(message: """${env.JOB_NAME} #${env.BUILD_NUMBER} End
-          """, color: "${color}", tokenCredentialId: 'slack-key')
+          slackSend(message: """${env.JOB_NAME} #${env.BUILD_NUMBER} failed
+          """, color: 'danger', tokenCredentialId: 'slack-key')
         }
       }
     }
