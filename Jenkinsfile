@@ -14,21 +14,14 @@ pipeline {
       }
     }
     stage('k8s deploy'){
-      color = 'good'
       steps {
         kubernetesDeploy(kubeconfigId: 'kubeconfig',
                          configs: '*.yaml')
       }
       post {
-        success {
-          color = 'good'
-        }
-        failure {
-          color = 'danger'
-        }
         always {
           slackSend(message: """${env.JOB_NAME} #${env.BUILD_NUMBER} End
-          """, color: color, tokenCredentialId: 'slack-key')
+          """, color: 'good', tokenCredentialId: 'slack-key')
         }
       }
     }
