@@ -1,4 +1,7 @@
 pipeline {
+  environment {
+    color = "good"
+  }
   agent any
   stages {
     stage('deploy start') {
@@ -14,27 +17,24 @@ pipeline {
       }
     }
     stage('k8s deploy'){
-      script {
-        def color = 'good'
-      }
       steps {
         kubernetesDeploy(kubeconfigId: 'kubeconfig',
                          configs: '*.yaml')
       }
       post {
         success {
-          script {
-            color = 'good'
+          environment {
+            color = "good"
           }
         }
         failure {
-          script {
-            color = 'danger'
+          environment{
+            color = "danger"
           }
         }
         always {
           slackSend(message: """${env.JOB_NAME} #${env.BUILD_NUMBER} End
-          """, color: 'good', tokenCredentialId: 'slack-key')
+          """, color: ${color}, tokenCredentialId: 'slack-key')
         }
       }
     }
