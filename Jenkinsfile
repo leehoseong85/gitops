@@ -23,12 +23,12 @@ pipeline {
       }
       post {
         success {
-          environment {
+          script {
             color = "good"
           }
         }
         failure {
-          environment {
+          script {
             color = "danger"
           }
         }
