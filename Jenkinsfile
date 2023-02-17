@@ -21,10 +21,14 @@ pipeline {
       }
       post {
         success {
-          color = 'good'
+          script {
+            color = 'good'
+          }
         }
         failure {
-          color = 'danger'
+          script {
+            color = 'danger'
+          }
         }
         always {
           slackSend(message: """${env.JOB_NAME} #${env.BUILD_NUMBER} End
